@@ -30,13 +30,12 @@ public abstract class GameSkill {
 	//return description of skill
 	public abstract String describe();
 
-	//change below:c
-	//manage io and return array for activate()'s arguement
-	public abstract String[] selectTargets(GameCharacter user, 
-					       GameEvent event, 
+	//manage io and return array for activate()'s arg
+	public abstract String[] selectTargets(GameCharacter user,
+					       GameEvent event,
 					       Scanner in);
 
-	//activate skill effect, typecasting as needed
+	//activate skill effect,
 	public abstract void activate(GameCharacter user, String[] idStrings);
 
 }

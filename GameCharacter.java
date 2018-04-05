@@ -64,39 +64,57 @@ public abstract class GameCharacter {
 	}
 
 	//create:
-	//public void learn(String ids)
 	//public void use(String ids)
 	//public void examine(String ids)
+	public void learn(String ids) {
+		gain(ids);
+	}
+
+	public void gain(String ids) {
+		if( ids.include("#") ) {
+			gainItem( GameItem.pool.get(ids) );
+		}
+		else if( ids.include("(") ) {
+			learnSkill( GameSkill.pool.get(ids) );
+		}
+		else {
+			System.out.println(toString() + " cannot gain/learn " + ids);
+		}
+	}
+
+	public void equip(String ids) { //must be in this.items
+		equipItem( GameItem.pool.get(ids) );
+	}
+
+	public void unequip(String ids) {
+		unequipItem( GameItem.pool.get(ids) );
+	}
+
 	public void learnSkill(GameSkill sk) {
 		skills.add(sk);
 	}
 
-	public void learnSkill(String skName) {
-		skills.add( GameSkill.pool.get(skName) );
+	public void forgetSkill(GameSkill sk) {
+		skills.remove( skills.indexOf(sk) );
 	}
 
 	public void gainItem(GameItem it) {
 		items.add(it);
 	}
 
-	public void gainItem(String itName) {
-		items.add( GameItem.pool.get(itName) );
+	public void giveItem(GameItem it, Player to) {
+		int i = items.indexOf(it);
+		to.items.add( items.remove(i) );
 	}
 
-	public void equip(GameItem it) {
+	public void equipItem(GameItem it) {
 		int i = items.indexOf(it);
 		equips.add( items.remove(i) );
 	}
 
-	public void unequip(GameItem equipped) {
+	public void unequipItem(GameItem equipped) {
 		int i = equips.indexOf( equipped );
 		items.add( equips.remove(i) );
-	}
-
-
-	public void giveItem(GameItem it, Player to) {
-		int i = items.indexOf(it);
-		to.items.add( items.remove(i) );
 	}
 
 	public void printStats() {
