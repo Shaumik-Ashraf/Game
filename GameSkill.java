@@ -11,7 +11,7 @@ public abstract class GameSkill {
 
 	public static HashMap<String, GameSkill> pool = new HashMap();
 
-	public String name;  //should be same as descendant's class name; UNIQUE
+	public String name;  //should be same as descendant's class name w/o Skill suffix; UNIQUE
 
 	//throws exception when duplicate name occurs
 	public GameSkill(String newSkillName) throws Exception {

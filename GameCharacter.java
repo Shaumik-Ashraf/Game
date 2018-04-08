@@ -117,6 +117,11 @@ public abstract class GameCharacter {
 		items.add( equips.remove(i) );
 	}
 
+	public boolean hasSkill(String ids) {
+		GameSkill gs = GameSkill.pool.get(ids);
+		return( skills.indexOf(gs)!=-1 );
+	}
+
 	public void printStats() {
 		System.out.println("Character " + this + " summary:");
 		System.out.println("Stats [str,dex,con,kno]: " + new int[] {str,dex,con,kno});
