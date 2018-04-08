@@ -71,10 +71,10 @@ public abstract class GameCharacter {
 	}
 
 	public void gain(String ids) {
-		if( ids.include("#") ) {
+		if( ids.indexOf("#")!=-1 ) {
 			gainItem( GameItem.pool.get(ids) );
 		}
-		else if( ids.include("(") ) {
+		else if( ids.indexOf("(")!=-1 ) {
 			learnSkill( GameSkill.pool.get(ids) );
 		}
 		else {
