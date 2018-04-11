@@ -29,6 +29,10 @@ public abstract class GameItem {
 		return( id );
 	}
 
+	public void destroy() { //remember to rm item from any lists
+		GameItem.pool.remove( toString() );
+	}
+
 	public void destroy(GameCharacter owner) {
 		int i = owner.items.indexOf( this );
 
@@ -64,6 +68,10 @@ public abstract class GameItem {
 
 	}
 
+	public boolean is(String trueIfContainsInName) {
+		return( toString().contains( trueIfContainsInName) );
+	}
+
 	//return description of item
 	public abstract String describe();
 
@@ -72,6 +80,9 @@ public abstract class GameItem {
 
 	//execute effect of item if equipped
 	public abstract void equipEffect(GameCharacter equipee);
+
+	//undo effect of equipping item
+	public abstract void unequipEffect(GameCharacter exequipee);
 
 	//execute effect of item if used on another character
 	public abstract void characterEffect(GameCharacter gchar);

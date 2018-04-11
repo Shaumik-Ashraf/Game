@@ -110,11 +110,13 @@ public abstract class GameCharacter {
 	public void equipItem(GameItem it) {
 		int i = items.indexOf(it);
 		equips.add( items.remove(i) );
+		it.equipEffect( this );
 	}
 
 	public void unequipItem(GameItem equipped) {
 		int i = equips.indexOf( equipped );
 		items.add( equips.remove(i) );
+		it.unequipEffect( this );
 	}
 
 	public boolean hasSkill(String ids) {

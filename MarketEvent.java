@@ -24,7 +24,7 @@ public class MarketEvent extends GameEvent {
 		PlayerCharacter player;
 
 		System.out.println("You are at a market.");
-		System.out.println("Its closed.");
+		System.out.println("It is currently closed. Press enter to continue");
 		in.nextLine();		
 	}
 

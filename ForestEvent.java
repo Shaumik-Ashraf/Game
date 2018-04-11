@@ -45,17 +45,20 @@ public class ForestEvent extends GameEvent {
 						"Cut wood",
 						"Hunt",
 						"Gather plants"});
-		//note exploitable bug
+		//note exploitable bug, player can select option without being prompted
 		
 		if( s.equals("Talk to the old man") ) {
-			System.out.println("Old man taught you how to cut wood");
-			//gain axe item (create new GameItem subclass)
+			new WoodCuttingSkill();
+			user.gainItem( new AxeItem() ); //create!
+			
+			System.out.println("Old man gave you an axe and taught you how to cut wood!");
+			
 		}
 		else if( s.equals("Cut wood") ) {
-			//gain wood, create wood gameitem
+			//activate WoodCuttingSkill
 		}
 		else;
-			//create HuntSkill, GatheringSkill, WoodItem, RawMeatItem, 
+			//create HuntSkill, GatheringSkill, RawMeatItem, 
 
 
 	}
