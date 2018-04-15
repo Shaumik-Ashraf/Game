@@ -10,6 +10,9 @@
  - item interactions...
 
 ## CONSIDER
+ - passive/auto skills
  - abstract class BattleItem extends GameItem (with abstract battleEffect())
  - abstract class DurableItem extends GameItem (has durability)
  - GameUtility "static" class
+
+create trigger list in Items and setTrigger method in skills 
