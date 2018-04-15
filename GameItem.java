@@ -69,7 +69,7 @@ public abstract class GameItem {
 	}
 
 	public boolean is(String trueIfContainsInName) {
-		return( toString().contains( trueIfContainsInName) );
+		return( toString().indexOf( trueIfContainsInName)!=-1 );
 	}
 
 	//return description of item

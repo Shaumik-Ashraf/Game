@@ -60,21 +60,19 @@ public class WoodCuttingSkill extends GameSkill {
 			System.out.prinntln("You need an Axe.");
 		}
 		else {
-			for(int i=0; i<idStrings.length; i++) { //actuall woodcutting...
+			for(int i=0; i<idStrings.length; i++) { //actual woodcutting...
 				axe.itemEffect( GameItem.pool.get(idString[i]) );
 				wood = new WoodItem();
 				//could insert rand here
 				user.gain( wood.toString() );
 				System.out.println("You got some wood.");
 				if( i+1 != idStrings.length ) {
-					System.out.println("Would you like to continue? [Y/n]");
-					s = Game.prompt(in);
-					s = Game.find(s, new String[] {"yes","no"};
-					if( s==null || s.equals("no") ) {
+					if( !Game.promptContinue() ) {
 						break;
 					}
 				}
 			}
+			System.out.println("You're done cutting wood.");
 		}
 
 	}

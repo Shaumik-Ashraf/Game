@@ -124,6 +124,11 @@ public abstract class GameCharacter {
 		return( skills.indexOf(gs)!=-1 );
 	}
 
+	public boolean hasItem(String ids) { //searches items and equips
+		GameItem gi = GameItem.pool.get(ids);
+		return( (items.indexOf(gi)!=-1) || (equips.indexOf(gi)!=-1) );
+	}
+
 	public void printStats() {
 		System.out.println("Character " + this + " summary:");
 		System.out.println("Stats [str,dex,con,kno]: " + new int[] {str,dex,con,kno});

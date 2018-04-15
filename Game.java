@@ -48,8 +48,11 @@ public final class Game {
 		return(null);
 	}
 
-	public static void listOptions(String[] arr) {
-		//TODO
+	public static boolean promptContinue() {
+		System.out.println("Would you like to continue? [Y/n]");
+		s = Game.prompt(in);
+		s = Game.find(s, new String[] {"yes","no"};
+		return( s==null || s.equals("no") );
 	}
 
 	public static PlayerCharacter newGame(int options, Scanner in) {
