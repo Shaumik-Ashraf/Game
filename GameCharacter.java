@@ -82,6 +82,34 @@ public abstract class GameCharacter {
 		}
 	}
 
+	public boolean has(String ids) {
+		if( ids.indexOf("#")!=-1 ) {
+			for(GameItem gi : items) {
+				if( gi.toString().equals(ids) ) {
+					return(true);
+				}
+			}
+			for(GameItem gi : items) {
+				if( gi.toString().equals(ids) ) {
+					return(true);
+				}
+			}
+			return(false);
+		} //close if item
+		else if( ids.indexOf("(")!=-1 ) {
+			for(GameSkill gs : skills) {
+				if( gs.toString().equals(ids) ) {
+					return(true);
+				}
+			}
+			return(false);
+		}
+		else if( cookies.containsKey(ids) ) {
+			return(true);
+		}
+		else return(false);
+	}
+
 	public void equip(String ids) { //must be in this.items
 		equipItem( GameItem.pool.get(ids) );
 	}

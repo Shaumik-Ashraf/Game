@@ -26,4 +26,8 @@ public class WoodItem extends GameItem {
 		//...
 	}
 
+	public void itemEffect(GameItem item) {
+		;
+	}
+
 }
