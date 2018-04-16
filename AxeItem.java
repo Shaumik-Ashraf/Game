@@ -2,18 +2,32 @@
 
 public class AxeItem extends GameItem {
 
-	public Axe() {
+	public AxeItem() {
 		super("Axe");
 	}
 
-	public String describe() {}
+	public String describe() {
+		return("Cuts things");
+	}
 
-	public void characterEffect() {}
+	public void standby() {
 
-	public void equipEffect() {}
+	}
 
-	public void unequipEffect() {}
+	public void characterEffect(GameCharacter character) {
 
-	public void itemEffect() {}
+	}
+
+	public void equipEffect(GameCharacter equipee) {
+		equipee.str += 3;
+	}
+
+	public void unequipEffect(GameCharacter exequipee) {
+		exequipee.str -= 3;
+	}
+
+	public void itemEffect(GameItem item) {
+
+	}
 
 }

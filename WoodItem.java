@@ -8,7 +8,7 @@ public class WoodItem extends GameItem {
 	}
 
 	public String describe() {
-		return(""); //TBD
+		return("Solid but still snapable; reliable yet roastable."); //TBD
 	}
 
 	public void standby() {}
@@ -22,9 +22,8 @@ public class WoodItem extends GameItem {
 	}
 
 	public void characterEffect(GameCharacter character) {
-		//System.out.println("You wack " + character + " with a piece of wood.");
-		//Figure out what to do...
-		
+		System.out.println("You wack " + character + " with a piece of wood.");
+		//...
 	}
 
 }

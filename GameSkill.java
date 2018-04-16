@@ -13,12 +13,9 @@ public abstract class GameSkill {
 
 	public String name;  //should be same as descendant's class name w/o Skill suffix; UNIQUE
 
-	//throws exception when duplicate name occurs
-	public GameSkill(String newSkillName) throws Exception {
+	public GameSkill(String newSkillName) {
 		name = newSkillName;
-		if( GameSkill.pool.containsKey( toString() ) ) {
-			throw new Exception("GameSkill already exists");
-		}
+		//will replace any previous instances; so skills shouldn't store any data
 		GameSkill.pool.put( toString(), this );
 	}
 
@@ -31,9 +28,7 @@ public abstract class GameSkill {
 	public abstract String describe();
 
 	//manage io and return array for activate()'s arg
-	public abstract String[] selectTargets(GameCharacter user,
-					       GameEvent event,
-					       Scanner in);
+	public abstract String[] select(GameCharacter user, GameEvent event, Scanner in);
 
 	//activate skill effect,
 	public abstract void activate(GameCharacter user, String[] idStrings);

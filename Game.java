@@ -48,10 +48,11 @@ public final class Game {
 		return(null);
 	}
 
-	public static boolean promptContinue() {
+	public static boolean promptContinue(Scanner in) {
+		String s;
 		System.out.println("Would you like to continue? [Y/n]");
 		s = Game.prompt(in);
-		s = Game.find(s, new String[] {"yes","no"};
+		s = Game.find(s, new String[] {"yes","no"});
 		return( s==null || s.equals("no") );
 	}
 

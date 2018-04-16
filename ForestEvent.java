@@ -22,7 +22,7 @@ public class ForestEvent extends GameEvent {
 
 	public void unfold(Scanner in) {
 		
-		PlayerCharacter player = new PlayerCharacter("Temp");
+		PlayerCharacter player = null;
 		String buf;
 		String s;
 
@@ -47,19 +47,45 @@ public class ForestEvent extends GameEvent {
 						"Gather plants"});
 		//note exploitable bug, player can select option without being prompted
 		
-		if( s.equals("Talk to the old man") ) {
-			new WoodCuttingSkill();
-			user.gainItem( new AxeItem() ); //create!
-			
-			System.out.println("Old man gave you an axe and taught you how to cut wood!");
-			
+		switch(s) {		
+			case "Talk to the old man":
+				new WoodCuttingSkill();
+				player.gainItem( new AxeItem() ); //create!
+				System.out.println("Old man gave you an axe and taught you how to cut wood!");
+				break;
+			case "Cut wood": 
+				if( player.has("(WoodCutting)") ) {
+					GameSkill woodcutting = GameSkill.pool.get("(WoodCutting)");
+					String[] sarr = woodcutting.select(player, this, in);
+					woodcutting.activate(player, sarr);
+				}
+				else {
+					System.out.println("You do not know how to cut wood.");
+				}
+				break;
+			case "Hunt": 
+				if( player.has("(Hunting)") ) {
+					GameSkill skill = GameSkill.pool.get("(Hunting)");
+					String[] targets = skill.select(player, this, in);
+					skill.activate(player, targets);
+				}
+				else {
+					System.out.println("You do not know how to hunt.");
+				}
+				break;
+			case "Gather plants": 
+				if( player.has("(Gathering)") ) {
+					GameSkill skill = GameSkill.pool.get("(Gathering)");
+					String[] targets = skill.select(player, this, in);
+					skill.activate(player, targets);
+				}
+				else {
+					System.out.println("You would eat a poisonous 'shroom and die.");
+				}
+				break;
+			default:
+				//create HuntSkill, GatheringSkill, RawMeatItem, 
 		}
-		else if( s.equals("Cut wood") ) {
-			//activate WoodCuttingSkill
-		}
-		else;
-			//create HuntSkill, GatheringSkill, RawMeatItem, 
-
 
 	}
 

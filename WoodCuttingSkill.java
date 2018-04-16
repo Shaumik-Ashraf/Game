@@ -1,14 +1,11 @@
 //WoodCuttingSkill
 
+import java.util.*;
+
 public class WoodCuttingSkill extends GameSkill {
 
 	public WoodCuttingSkill() {
-		try {
-			super("WoodCutting");
-		}
-		catch {
-			//skill already exists
-		}
+		super("WoodCutting");
 	}
 
 	//return description of skill
@@ -17,9 +14,7 @@ public class WoodCuttingSkill extends GameSkill {
 	}
 
 	//targets all TreeItems in event
-	public String[] selectTargets(GameCharacter user,
-				      GameEvent event,
-				      Scanner in) {
+	public String[] select(GameCharacter user, GameEvent event, Scanner in) {
 		ArrayList<String> trees = new ArrayList<String>();
 		for(GameItem gi : event.items) {
 			if( gi.is("Tree") ) {
@@ -64,7 +59,7 @@ public class WoodCuttingSkill extends GameSkill {
 				user.gain( wood.toString() );
 				System.out.println("You got some wood.");
 				if( !s.equals(idStrings[idStrings.length-1]) ) {
-					if( !Game.promptContinue() ) {
+					if( !Game.promptContinue(in) ) {
 						break;
 					}
 				}

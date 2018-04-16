@@ -116,7 +116,7 @@ public abstract class GameCharacter {
 	public void unequipItem(GameItem equipped) {
 		int i = equips.indexOf( equipped );
 		items.add( equips.remove(i) );
-		it.unequipEffect( this );
+		equipped.unequipEffect( this );
 	}
 
 	public boolean hasSkill(String ids) {
