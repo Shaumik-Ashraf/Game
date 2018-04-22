@@ -15,14 +15,17 @@ public class WoodCuttingSkill extends GameSkill {
 
 	//targets all TreeItems in event
 	public String[] select(GameCharacter user, GameEvent event, Scanner in) {
-		ArrayList<String> ret = new ArrayList<String>();
+		ArrayList<String> trees = new ArrayList<String>();
+		String[] ret;
 		for(GameItem gi : event.items) {
 			if( gi.is("Tree") ) {
-				ret.add( gi.toString() );
+				trees.add( gi.toString() );
 			}
 		}
-		System.out.println("You find a total of " + ret.size() + " trees in the area.");
-		return( ret.toArray() );
+		ret = new String[trees.size()];
+		trees.toArray(ret);
+		System.out.println("You find a total of " + ret.length + " trees in the area.");
+		return( ret );
 	}
 
 	//activate skill effect,
@@ -33,6 +36,7 @@ public class WoodCuttingSkill extends GameSkill {
 		GameItem wood;
 		GameItem tree;
 
+		//search for axe
 		for(GameItem gi : user.items) {
 			if( gi.is("Axe") ) {
 				hasAxe = true;

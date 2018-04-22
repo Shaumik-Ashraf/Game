@@ -28,37 +28,29 @@ public class ForestEvent extends GameEvent {
 		PlayerCharacter player = null;
 		String buf;
 		String s;
+		ArrayList<String> options = new ArrayList<String>();
 
 		items.add( new TreeItem() );
 		items.add( new TreeItem() );
 
-		for(int i=0; i<players.size(); i++) {
-			if( players.get(i).cookies.containsKey("IsMainCharacter") ) {
-				player = (PlayerCharacter)players.get(i);
-			}
-		}
+		player = Game.getPlayer();
 
-		System.out.println("You're in a forest");
+		options.add("Talk to that generic old man who gives free stuff");
+		if( player.hasSkill("(WoodCutting)") ) options.add("Cut wood");
+		if( player.hasSkill("(Hunting)") ) options.add("Hunt");
+		if( player.hasSkill("(Gathering)") ) options.add("Gather plants");
+
+
+		System.out.println("You're in a forest.");
 		System.out.println("What do you do now?");
 
-		System.out.println("0) Talk to the old man");
-		if( player.hasSkill("(WoodCutting)") ) System.out.println("1) Cut wood");	
-		if( player.hasSkill("(Hunting)") ) System.out.println("2) Hunt");	
-		if( player.hasSkill("(Gathering)") ) System.out.println("3) Gather plants");		
-
-		buf = in.nextLine();
-		s = Game.find(buf, new String[] {"Talk to the old man",
-						"Cut wood",
-						"Hunt",
-						"Gather plants"});
-
-		switch(s) {
-			case "Talk to the old man":
+		switch( Game.prompt(in, options, 0) ) {
+			case 0: //talk to old man
 				player.learn( new WoodCuttingSkill().toString() );
 				player.gainItem( new AxeItem() );
 				System.out.println("Old man gave you an axe and taught you how to cut wood!");
 				break;
-			case "Cut wood":
+			case 1: //cut wood
 				if( player.has("(WoodCutting)") ) {
 					GameSkill woodcutting = GameSkill.pool.get("(WoodCutting)");
 					String[] targets = woodcutting.select(player, this, in);
@@ -68,7 +60,7 @@ public class ForestEvent extends GameEvent {
 					System.out.println("You do not know how to cut wood.");
 				}
 				break;
-			case "Hunt":
+			case 2: //hunt
 				if( player.has("(Hunting)") ) {
 					GameSkill skill = GameSkill.pool.get("(Hunting)");
 					String[] targets = skill.select(player, this, in);
@@ -78,7 +70,7 @@ public class ForestEvent extends GameEvent {
 					System.out.println("You do not know how to hunt.");
 				}
 				break;
-			case "Gather plants":
+			case 3: //gather
 				if( player.has("(Gathering)") ) {
 					GameSkill skill = GameSkill.pool.get("(Gathering)");
 					String[] targets = skill.select(player, this, in);
@@ -89,8 +81,9 @@ public class ForestEvent extends GameEvent {
 				}
 				break;
 			default:
-				//create HuntSkill, GatheringSkill, RawMeatItem, 
-		}
+				//create HuntSkill, GatheringSkill, RawMeatItem,
+				break;
+		} //close switch
 
 	}
 
@@ -98,7 +91,7 @@ public class ForestEvent extends GameEvent {
 
 		new TownEvent(players, items);
 
-		return( new String[] {"!TownEvent"} );
+		return( new String[] {"!TownEvent", "!ForestEvent"} );
 	}
 
 }

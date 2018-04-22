@@ -5,6 +5,8 @@ import java.util.*;
 
 public class DebugEvent extends GameEvent {
 
+	private boolean goToStart = false;
+
 	public DebugEvent() {
 		super("DebugEvent");
 	}
@@ -24,7 +26,8 @@ public class DebugEvent extends GameEvent {
 
 	//play out the event
 	public void unfold(Scanner in) {
-		String s;
+		String[] options = new String[] {"yes", "no", "quit"};
+		int x;
 		System.out.println("DebugEvent#unfold():");
 		System.out.println("====Printing Party================");
 		System.out.println(players);
@@ -34,67 +37,76 @@ public class DebugEvent extends GameEvent {
 
 		System.out.println("=====Testing Input================");
 		System.out.println( Game.prompt(in) );
-		System.out.println("Echo success?");
+		System.out.println("Did it echo your input?");
+		System.out.println("Pick one:");
+		x = Game.prompt(in, new String[] {"A", "B", "C"});
+		System.out.println("You picked choice number " + x + ".");
 
 		System.out.println("=====More Debug===================");
-		
-		System.out.println("Print each player? [y/n/c]");
-		s = Game.prompt(in);
-		s = Game.find(s, new String[] {"yes", "no", "cancel"});
-		if( s.equals("yes") ) {
+
+		System.out.println("Print each player? [y/n/q]");
+		x = Game.prompt(in, options);
+		if( x==0 ) {
 			for( GameCharacter gch : players ) {
 				gch.printAll();
 			}
 		}
-		if( s.equals("cancel") ) {
-			return ;
+		if( x==2 ) {
+			System.exit(0);
 		}
 
 		System.out.println("Print GameCharacter pool? [y/n/c]");
-		s = Game.prompt(in);
-		s = Game.find(s, new String[] {"yes", "no", "cancel"});
-		if( s.equals("yes") ) {
+		x = Game.prompt(in, options);
+		if( x==0 ) {
 			System.out.println( GameCharacter.pool );
 		}
-		if( s.equals("cancel") ) {
-			return ;
+		if( x==1 ) {
+			System.exit(0);
 		}
 
 		System.out.println("Print GameEvent pool? [y/n/c]");
-		s = Game.prompt(in);
-		s = Game.find(s, new String[] {"yes", "no", "cancel"});
-		if( s.equals("yes") ) {
+		x = Game.prompt(in, options);
+		if( x==0 ) {
 			System.out.println( GameEvent.pool );
 		}
-		if( s.equals("cancel") ) {
-			return ;
+		if( x==2 ) {
+			System.exit(0);
 		}
 
-		System.out.println("Print GameSkill pool? [y/n/c]");
-		s = Game.prompt(in);
-		s = Game.find(s, new String[] {"yes", "no", "cancel"});
-		if( s.equals("yes") ) {
+		System.out.println("Print GameSkill pool? [y/n/q]");
+		x = Game.prompt(in, options);
+		if( x==0 ) {
 			System.out.println( GameSkill.pool );
 		}
-		if( s.equals("cancel") ) {
+		if( x==2 ) {
 			return ;
 		}
 
-		System.out.println("Print GameItem pool? [y/n/c]");
-		s = Game.prompt(in);
-		s = Game.find(s, new String[] {"yes", "no", "cancel"});
-		if( s.equals("yes") ) {
+		System.out.println("Print GameItem pool? [y/n/q]");
+		x = Game.prompt(in, options);
+		if( x==0 ) {
 			System.out.println( GameItem.pool );
 		}
-		if( s.equals("cancel") ) {
-			return ;
+		if( x==2 ) {
+			System.exit(0);
 		}
+
+		System.out.println("Would like to go back to !StartEvent?");
+		x = Game.prompt(in, options);
+		if( x==0 ) {
+			goToStart = true;
+		}
+		else {
+			goToStart = false;
+		}
+
 	}
 
-	//returns array of all next possible events, from which the user will choose
 	public String[] nextEvents() {
+		if( goToStart ) {
+			return( new String[] {new StartEvent().toString()} );
+		}
 		return(null);
 	}
-
 
 }

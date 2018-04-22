@@ -24,9 +24,9 @@ public class StartEvent extends GameEvent {
 	}
 
 	public void unfold(Scanner in) {
+		System.out.println("Press enter to begin:");
+		Game.prompt(in);
 		System.out.println("And so it begins...");
-		System.out.println("Press any key to continue");
-		in.nextLine();		
 	}
 
 	public String[] nextEvents() {

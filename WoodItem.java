@@ -8,7 +8,7 @@ public class WoodItem extends GameItem {
 	}
 
 	public String describe() {
-		return("Solid but still snapable; reliable yet roastable."); //TBD
+		return("Solid but still snapable; reliable yet roastable.");
 	}
 
 	public void standby() {}
