@@ -2,16 +2,17 @@
 
 ## TODO
  - Documentation
- - See ForestEvent.java, WoodItem.java, AxeItem.java
+ - See RawMeatItem, ChickenItem, HuntingSkill, GatheringSkill
  - Expand on MarketEvent.java
+ - GameOverEvent
+ - stable branch
 
 ## CHECK
- - String's contains/has/is/indexOf methods
- - item interactions...
+ - ChickenItem
 
 ## CONSIDER
+ - rename *Event to *Region
  - passive/auto skills
  - abstract class BattleItem extends GameItem (with abstract battleEffect())
  - abstract class DurableItem extends GameItem (has durability)
- - GameUtility "static" class
 

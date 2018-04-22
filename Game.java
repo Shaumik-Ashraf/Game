@@ -169,6 +169,9 @@ public final class Game {
 		x = Game.prompt(sc, options, 0);
 		event = GameEvent.pool.get( nextEventStrs[x] );
 	    }
+	    for(GameItem gi : GameItem.pool.values()) {
+		gi.standby();
+	    }
 	    System.out.print("\n\n");
 	  }
 
