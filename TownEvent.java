@@ -27,10 +27,11 @@ public class TownEvent extends GameEvent {
 
 	public String[] nextEvents() {
 
-		new MarketEvent(players, items);
-		new ForestEvent(players, items);
+		new MarketEvent(parties, null);
+		new ForestEvent(parties, null);
+		new DebugEvent(parties, items);
 
-		return( new String[] {"!MarketEvent", "!ForestEvent"} );
+		return( new String[] {"!MarketEvent", "!ForestEvent", "!DebugEvent"} );
 	}
 
 }

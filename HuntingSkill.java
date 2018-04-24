@@ -1,8 +1,7 @@
 //HuntingSkill
-/* string: (skillname)
- * all subclasses are unique and can only have one instance, whose mother alias is stored in pool
- * all players with skill will hold a reference to that skill
- * any reference to the skill can be determined by its unique name
+/* string: (Hunting)
+ * DO LATER AND RESTRUCTURE BASED ON CHICKENS
+ *
  */
 
 import java.util.*;
@@ -26,7 +25,7 @@ public class HuntingSkill extends GameSkill {
         String[] huntable = new String[] {"deer", "bear", "chicken"};
         ArrayList<String> arr = new ArrayList<String>();
         String[] ret;
-        
+
         for(GameItem gi : event.items) {
             for(String s : huntable) {
                 if( gi.is(s) ) {
@@ -34,30 +33,30 @@ public class HuntingSkill extends GameSkill {
                 }
             }
         }
-        
+
         for(int i=0; i<arr.size(); i++) {
             if( Game.rng()>8 ) {
                 arr.remove(i);
             }
         }
-        
+
         ret = new String[ arr.size() ];
         arr.toArray(ret);
-        
+
         return(ret);
     }
 
     //activate skill effect,
-    public void activate(GameCharacter user, String[] idStrings, Scanner in) {
-        
+    public void activate(GameCharacter user, GameEvent event, String[] idStrings, Scanner in) {
+
         GameItem toHunt;
         int x;
-        
+
         if( idStrings.length == 0 ) {
             System.out.println("You found nothing.");
         }
         else if( idStrings.length==1 ) {
-            toHunt = Game.pool.get(idStrings[0]);
+            toHunt = GameItem.pool.get(idStrings[0]);
             System.out.println("You found " + toHunt);
             if( Game.rng() < 5 ) {
                 System.out.println("It got away.");
@@ -65,7 +64,7 @@ public class HuntingSkill extends GameSkill {
             else {
                 event.items.remove( event.items.indexOf( toHunt ) );
                 toHunt.destroy();
-                user.gain( new RawMeatItem() );
+                user.gain( new RawMeatItem().toString() );
             }
         }
         else {
@@ -79,10 +78,10 @@ public class HuntingSkill extends GameSkill {
             else {
                 event.items.remove( event.items.indexOf( toHunt ) );
                 toHunt.destroy();
-                user.gain( new RawMeatItem() );
+                user.gain( new RawMeatItem().toString() );
             }
         }
-        
+
     }
 
 }

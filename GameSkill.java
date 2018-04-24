@@ -31,6 +31,9 @@ public abstract class GameSkill {
 	public abstract String[] select(GameCharacter user, GameEvent event, Scanner in);
 
 	//activate skill effect,
-	public abstract void activate(GameCharacter user, String[] idStrings, Scanner in);
+	public abstract void activate(GameCharacter user,
+				      GameEvent event,
+				      String[] targets,
+				      Scanner in);
 
 }

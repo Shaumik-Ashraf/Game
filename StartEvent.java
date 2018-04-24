@@ -31,7 +31,7 @@ public class StartEvent extends GameEvent {
 
 	public String[] nextEvents() {
 
-		new TownEvent(players, items);
+		new TownEvent(parties, null);
 
 		return( new String[] {"!TownEvent"} );
 	}

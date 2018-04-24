@@ -42,13 +42,9 @@ public class PlayerCharacter extends GameCharacter {
 	}
 
 	public String[] die() {
-		for(GameItem it : equips) {
-			it.destroy( this );
-		}
-		for(GameItem it : items) {
-			it.destroy( this );
-		}
+		destroy();
 		System.gc();
+		//still exists in local variable from which this is called
 		return( new String[] {"R.I.P.", name, description} );
 	}
 

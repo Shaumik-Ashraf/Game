@@ -17,7 +17,7 @@ public class MarketEvent extends GameEvent {
 	}
 
 	public String describe() {
-		return("The only town in the game.");
+		return("Sellers and scammers and buyers and beggers.");
 	}
 
 	public void unfold(Scanner in) {
@@ -25,15 +25,15 @@ public class MarketEvent extends GameEvent {
 
 		System.out.println("You are at a market.");
 		System.out.println("It is currently closed. Press enter to continue");
-		in.nextLine();		
+		in.nextLine();
 	}
 
 	public String[] nextEvents() {
 
-		new MarketEvent(players, items);
-		new ForestEvent(players, items);
+		new MarketEvent(parties, null);
+		new ForestEvent(parties, null);
 
-		return( new String[] {"!TownEvent"} );
+		return( new String[] {"!TownEvent", "!MarketEvent"} );
 	}
 
 }

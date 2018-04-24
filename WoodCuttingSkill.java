@@ -17,6 +17,8 @@ public class WoodCuttingSkill extends GameSkill {
 	public String[] select(GameCharacter user, GameEvent event, Scanner in) {
 		ArrayList<String> trees = new ArrayList<String>();
 		String[] ret;
+
+		//get trees
 		for(GameItem gi : event.items) {
 			if( gi.is("Tree") ) {
 				trees.add( gi.toString() );
@@ -24,17 +26,19 @@ public class WoodCuttingSkill extends GameSkill {
 		}
 		ret = new String[trees.size()];
 		trees.toArray(ret);
+
 		System.out.println("You find a total of " + ret.length + " trees in the area.");
 		return( ret );
 	}
 
 	//activate skill effect,
-	public void activate(GameCharacter user, String[] idStrings, Scanner in) {
+	public void activate(GameCharacter user, GameEvent event, String[] targets, Scanner in) {
 		//requires axe item in user
 
 		boolean hasAxe = false;
 		GameItem wood;
 		GameItem tree;
+		int numTrees = targets.length;
 
 		//search for axe
 		for(GameItem gi : user.items) {
@@ -54,14 +58,16 @@ public class WoodCuttingSkill extends GameSkill {
 			System.out.println("You need an Axe.");
 		}
 		else {
-			for(String s : idStrings) { //actual woodcutting...
+			int i = 0;
+			for(String s : targets) { //actual woodcutting...
 				tree = GameItem.pool.get(s);
-				tree.destroy();
+				event.destroyItem(tree);
 				wood = new WoodItem();
 				//could insert rand here
 				user.gain( wood.toString() );
 				System.out.println("You got some wood.");
-				if( !s.equals(idStrings[idStrings.length-1]) ) {
+				numTrees--;
+				if( numTrees > 1 ) {
 					if( !Game.promptContinue(in) ) {
 						break;
 					}

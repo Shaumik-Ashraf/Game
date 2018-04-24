@@ -56,7 +56,7 @@ public class ForestEvent extends GameEvent {
                 if( player.has("(WoodCutting)") ) {
                     GameSkill woodcutting = GameSkill.pool.get("(WoodCutting)");
                     String[] targets = woodcutting.select(player, this, in);
-                    woodcutting.activate(player, targets, in);
+                    woodcutting.activate(player, this, targets, in);
                 }
                 else {
                     System.out.println("You do not know how to cut wood.");
@@ -66,7 +66,7 @@ public class ForestEvent extends GameEvent {
                 if( player.has("(Hunting)") ) {
                     GameSkill skill = GameSkill.pool.get("(Hunting)");
                     String[] targets = skill.select(player, this, in);
-                    skill.activate(player, targets, in);
+                    skill.activate(player, this, targets, in);
                 }
                 else {
                     System.out.println("You do not know how to hunt.");
@@ -76,10 +76,10 @@ public class ForestEvent extends GameEvent {
                 if( player.has("(Gathering)") ) {
                     GameSkill skill = GameSkill.pool.get("(Gathering)");
                     String[] targets = skill.select(player, this, in);
-                    skill.activate(player, targets, in);
+                    skill.activate(player, this, targets, in);
                 }
                 else {
-                    System.out.println("You would eat a poisonous 'shroom and die.");
+                    System.out.println("You don't know (Gathering). You would eat a poisonous shroom and die.");
                 }
                 break;
             default:
@@ -91,7 +91,7 @@ public class ForestEvent extends GameEvent {
 
     public String[] nextEvents() {
 
-        new TownEvent(players, items);
+        new TownEvent(parties, null);
 
         return( new String[] {"!TownEvent", "!ForestEvent"} );
     }

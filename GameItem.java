@@ -29,22 +29,8 @@ public abstract class GameItem {
 		return( id );
 	}
 
-	public void destroy() { //remember to rm item from any lists
-		GameItem.pool.remove( toString() );
-	}
-
-	public void destroy(GameCharacter owner) {
-		int i = owner.items.indexOf( this );
-
-		if( i==-1 ) {
-			i = owner.equips.indexOf( this );
-			if( i!=-1 ) {
-				owner.equips.remove(i);
-			}
-		}
-		else {
-			owner.items.remove(i);
-		}
+	public void destroy() { //WARNING, use: GameEvent#destroyItem() || GameCharacter#destroyItem()
+		//only use this if this has been removed from all other lists containing an alias to this
 		GameItem.pool.remove( toString() );
 	}
 

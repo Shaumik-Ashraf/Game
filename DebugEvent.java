@@ -15,8 +15,8 @@ public class DebugEvent extends GameEvent {
 		super("DebugEvent", p);
 	}
 
-	public DebugEvent(List<GameCharacter> players, List<GameItem> items) {
-		super("DebugEvent", players, items);
+	public DebugEvent(List<GameCharacter> parties, List<GameItem> items) {
+		super("DebugEvent", parties, items);
 	}
 
 	//return description of event
@@ -29,8 +29,8 @@ public class DebugEvent extends GameEvent {
 		String[] options = new String[] {"yes", "no", "quit"};
 		int x;
 		System.out.println("DebugEvent#unfold():");
-		System.out.println("====Printing Party================");
-		System.out.println(players);
+		System.out.println("====Printing Parties================");
+		System.out.println(parties);
 
 		System.out.println("====Printing Items================");
 		System.out.println(items);
@@ -44,10 +44,10 @@ public class DebugEvent extends GameEvent {
 
 		System.out.println("=====More Debug===================");
 
-		System.out.println("Print each player? [y/n/q]");
+		System.out.println("Print each party? [y/n/q]");
 		x = Game.prompt(in, options);
 		if( x==0 ) {
-			for( GameCharacter gch : players ) {
+			for( GameCharacter gch : parties ) {
 				gch.printAll();
 			}
 		}

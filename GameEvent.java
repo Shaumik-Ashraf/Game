@@ -13,7 +13,7 @@ public abstract class GameEvent {
 
 	private int id;
 	public String name;  //same as descendants name, UNIQUE
-	public List<GameCharacter> players;
+	public List<GameCharacter> parties;
 	public List<GameItem> items;
 
 	//creating new event with same name will overwrite previous event
@@ -22,18 +22,25 @@ public abstract class GameEvent {
 		idCounter++;
 
 		name = selfname;
-		players = new LinkedList();
+		parties = new LinkedList();
 		items = new LinkedList();
 
-		pool.put( toString(), this );
+		if( GameEvent.pool.containsKey( toString() ) ) {
+			//if prev instance existed, inherit all of its items, but NOT parties
+			//parties = GameEvent.pool.get( toString() ).parties;
+			items = GameEvent.pool.get( toString() ).items;
+			GameEvent.pool.remove( toString() );
+		}
+		GameEvent.pool.put( toString(), this );
+
 	}
 
 	public GameEvent(String selfname, GameCharacter player) {
 		id = idCounter;
 		idCounter++;
 
-		players = new LinkedList();
-		players.add(player);
+		parties = new LinkedList();
+		parties.add(player);
 		items = new LinkedList();
 
 		pool.put( toString(), this );
@@ -44,13 +51,13 @@ public abstract class GameEvent {
 		idCounter++;
 
 		name = selfname;
-		players = p;
+		parties = p;
 		items = i;
 
-		if( p==null ) {
-			players = new LinkedList();
+		if( parties==null ) {
+			parties = new LinkedList();
 		}
-		if( i==null ) {
+		if( items==null ) {
 			items = new LinkedList();
 		}
 
@@ -66,8 +73,30 @@ public abstract class GameEvent {
 	}
 
 	public void reload(List<GameCharacter> p, List<GameItem> i) {
-		players = p;
+		parties = p;
 		items = i;
+	}
+
+	public void destroy(String ids) {
+		if( ids.indexOf("@")!=-1 ) {
+			destroyParty( GameCharacter.pool.get( ids ) );
+		}
+		else if( ids.indexOf("#")!=-1 ) {
+			destroyItem( GameItem.pool.get( ids ) );
+		}
+		else ;
+	}
+
+	public void destroyItem(GameItem item) {
+		int i = items.indexOf(item);
+		GameItem toDestroy = items.remove(i);
+		toDestroy.destroy();
+	}
+
+	public void destroyParty(GameCharacter party) {
+		int i = parties.indexOf(party);
+		GameCharacter gch = parties.remove(i);
+		gch.destroy();
 	}
 
 	//return description of event

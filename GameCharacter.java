@@ -110,6 +110,18 @@ public abstract class GameCharacter {
 		else return(false);
 	}
 
+	public void destroy(String ids) { //destroyItem() if item, or destroySkill if skill
+		if( ids.indexOf("#") != -1 ) {
+			destroyItem( GameItem.pool.get(ids) );
+		}
+		else if( ids.indexOf("(") != -1 ) {
+			forgetSkill( GameSkill.pool.get(ids) );
+		}
+		else {
+			//unrecognized; do nothing
+		}
+	}
+
 	public void equip(String ids) { //must be in this.items
 		equipItem( GameItem.pool.get(ids) );
 	}
@@ -130,9 +142,23 @@ public abstract class GameCharacter {
 		items.add(it);
 	}
 
-	public void giveItem(GameItem it, Player to) {
+	public void giveItem(GameItem it, Player to) { //gives only from items
 		int i = items.indexOf(it);
 		to.items.add( items.remove(i) );
+	}
+
+	public void destroyItem(GameItem it) { //destroys from items or equips
+		int i = items.indexOf(it);
+		if( i==-1 ) {
+			i = equips.indexOf(it);
+			if( i!=-1 ) {
+				equips.remove(i);
+			}
+		}
+		else {
+			items.remove(i);
+		}
+		it.destroy();
 	}
 
 	public void equipItem(GameItem it) {
@@ -157,6 +183,19 @@ public abstract class GameCharacter {
 		return( (items.indexOf(gi)!=-1) || (equips.indexOf(gi)!=-1) );
 	}
 
+	public void destroy() { //destroy all of its own skills and items, and then itself
+		for(GameSkill sk : skills) {
+			forgetSkill(sk);
+		}
+		for(GameItem it : items) {
+			destroyItem(it);
+		}
+		for(GameItem it : equips) {
+			destroyItem(it);
+		}
+		GameCharacter.pool.remove( toString() );
+	}
+	
 	public void printStats() {
 		System.out.println("Character " + this + " summary:");
 		System.out.println("Stats [str,dex,con,kno]: " + new int[] {str,dex,con,kno});
@@ -177,6 +216,7 @@ public abstract class GameCharacter {
 
 	public abstract String describe();
 
+	//return array of idStrings for use by event/skill
 	public abstract String[] die();
 
 }

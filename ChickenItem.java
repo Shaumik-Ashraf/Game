@@ -1,6 +1,6 @@
 //ChickenItem.java
-/* string: itemname#<id>
- *         <id> must be present
+/* Note maybe change into character, utilize die() method
+ * Or keep track of all events containing chicken for destroy()
  */
 
 import java.util.*;
@@ -15,16 +15,15 @@ public class ChickenItem extends GameItem {
 
     //return description of item
     public String describe() {
-        System.out.println("Bok bok!");
+        return("Bok bok!");
     }
 
     //any effects done on item as time passes (1/turn)
     public void standby() {
         age++;
-        if( age>20 ) {
-            chicken.destroy();
-            //make sure it removes itself from other lists somehow
-        }
+        //if( age>20 ) { //fails
+        //    destroy();
+        //}
     }
 
     //execute effect of item if equipped
