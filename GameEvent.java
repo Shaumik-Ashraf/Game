@@ -7,52 +7,39 @@ import java.util.*;
 
 public abstract class GameEvent {
 
-	private static int idCounter;
 	public static HashMap<String,GameEvent> pool = new HashMap<String,GameEvent>(); 
 	//pool: className => instance
 
-	private int id;
 	public String name;  //same as descendants name, UNIQUE
 	public List<GameCharacter> parties;
 	public List<GameItem> items;
 
 	//creating new event with same name will overwrite previous event
 	public GameEvent(String selfname){
-		id = idCounter;
+		String toS;
 		idCounter++;
 
-		name = selfname;
 		parties = new LinkedList();
 		items = new LinkedList();
+		
+		name = selfname;
+		toS = "(" + name + ")";
 
-		if( GameEvent.pool.containsKey( toString() ) ) {
-			//if prev instance existed, inherit all of its items, but NOT parties
-			//parties = GameEvent.pool.get( toString() ).parties;
-			items = GameEvent.pool.get( toString() ).items;
-			GameEvent.pool.remove( toString() );
+		if( GameEvent.pool.containsKey( toS ) ) {
+			//replace previous instance
+			GameEvent.pool.remove( toS );
 		}
 		GameEvent.pool.put( toString(), this );
 
 	}
 
-	public GameEvent(String selfname, GameCharacter player) {
-		id = idCounter;
-		idCounter++;
-
-		parties = new LinkedList();
-		parties.add(player);
-		items = new LinkedList();
-
-		pool.put( toString(), this );
-	}
-
 	public GameEvent(String selfname, List<GameCharacter> p, List<GameItem> i){
-		id = idCounter;
-		idCounter++;
+		String toS;
 
 		name = selfname;
 		parties = p;
 		items = i;
+		toS = "(" + name + ")";
 
 		if( parties==null ) {
 			parties = new LinkedList();
@@ -61,18 +48,30 @@ public abstract class GameEvent {
 			items = new LinkedList();
 		}
 
+		if( GameEvent.pool.containsKey( toS ) ) {
+			//replace previous instance
+			GameEvent.pool.remove( toS );
+		}
 		GameEvent.pool.put( toString(), this );
-	}
-
-	public int getId() {
-		return(id);
 	}
 
 	public String toString() {
 		return("!" + name);
 	}
 
-	public void reload(List<GameCharacter> p, List<GameItem> i) {
+	public void add(String[] ids) {
+		for(String s : ids) {
+			if( s.indexOf("@")!=-1 ) {
+				parties.add( GameCharacter.pool.get(s) );
+			}
+			else if( s.indexOf("#")!=-1 ) {
+				items.add( GameItem.pool.get(s) );
+			}
+			else ;
+		}
+	}
+	
+	public void reset(List<GameCharacter> p, List<GameItem> i) {
 		parties = p;
 		items = i;
 	}
@@ -103,7 +102,7 @@ public abstract class GameEvent {
 	public abstract String describe();
 
 	//play out the event
-	public abstract void unfold(Scanner in);
+	public abstract void unfold(GameCharacter player, Scanner in);
 
 	//returns array of all next possible events, from which the user will choose
 	public abstract String[] nextEvents();

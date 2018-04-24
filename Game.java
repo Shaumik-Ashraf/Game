@@ -13,7 +13,7 @@ import java.util.*;
 public final class Game {
 
 	public static String prompt(Scanner in) {
-		System.out.print(">>");
+		System.out.print(">> ");
 		try {
 			return in.nextLine();
 		} catch(Exception e) {
@@ -113,6 +113,13 @@ public final class Game {
 		return( (int)(Math.random()*max) );
 	}
 
+	public String[] listToArray(AbstractList<String> list) { //converts string list to string array
+		String[] ret = new String[ list.size() ];
+		list.toArray(ret);
+		
+		return(ret);
+	}
+	
 	public static PlayerCharacter newGame(int options, Scanner in) {
 		//different options can have different setups
 		//0: create new character
@@ -141,12 +148,12 @@ public final class Game {
 	  event = new StartEvent(player);
 
 	  while( event!=null ) {
-	    event.unfold(sc);
+	    event.unfold(player, sc);
 	    nextEventStrs = event.nextEvents();
 	    options = new ArrayList<String>();
 
 	    if( nextEventStrs==null ) {
-		event=null;
+			event=null;
 	    }
 	    else if( nextEventStrs.length == 1 ) {
 		event = GameEvent.pool.get(nextEventStrs[0]);
@@ -156,7 +163,9 @@ public final class Game {
 		for(int i=0; i<nextEventStrs.length; i++) {
 			String s;
 			if( !GameEvent.pool.containsKey(nextEventStrs[i]) ) {
-				System.out.println("!!!!!!!!!!!!!!!!!!!!");
+				System.err.println("Found nonexisting event in nextEventStrs: " + nextEventStrs[i]);
+				System.err.println("Last event: " + event);
+				System.err.println("Next event !Debug!");
 				event = new DebugEvent();
 			}
 			s = nextEventStrs[i]
