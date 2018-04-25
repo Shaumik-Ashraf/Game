@@ -11,49 +11,35 @@ public abstract class GrowingEvent extends GameEvent {
 	*/
 
 	//creating new growing event with same name will inherit previous event
-	public GameEvent(String selfname){
+	public GrowingEvent(String selfname){
 		String toS;
 
-		parties = new LinkedList();
-		items = new LinkedList();
-		
-		name = selfname;
 		toS = "(" + name + ")";
 
 		if( GameEvent.pool.containsKey( toS ) ) {
 			//inherit all of its parties and items
 			GameEvent former = GameEvent.pool.remove( toS );
-			this.parties.addAll( former.parties );
-			this.items.addAll( former.items);
+			super( selfname, former.parties, former.items );
 			//former now free'd
 		}
-		GameEvent.pool.put( toString(), this );
 
 	}
 
-	public GameEvent(String selfname, List<GameCharacter> p, List<GameItem> i){
+	public GrowingEvent(String selfname, List<GameCharacter> p, List<GameItem> i){
 		String toS;
 
-		name = selfname;
-		parties = p;
-		items = i;
 		toS = "(" + name + ")";
-
-		if( parties==null ) {
-			parties = new LinkedList();
-		}
-		if( items==null ) {
-			items = new LinkedList();
-		}
 
 		if( GameEvent.pool.containsKey( toS ) ) {
 			//inherit all of its parties and items
 			GameEvent former = GameEvent.pool.remove( toS );
-			this.parties.addAll( former.parties );
-			this.items.addAll( former.items);
+			super( selfname, former.parties, former.items );
 			//former now free'd
 		}
-		GameEvent.pool.put( toString(), this );
+		
+		if( p!=null ) this.parties.addAll( p );
+		if( i!=null ) this.items.addAll( i );
+		
 	}
 	
     //return description of event
