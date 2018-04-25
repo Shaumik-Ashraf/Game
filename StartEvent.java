@@ -11,10 +11,6 @@ public class StartEvent extends GameEvent {
 		super("StartEvent");
 	}
 
-	public StartEvent(GameCharacter player) {
-		super("StartEvent", player);
-	}
-
 	public StartEvent(List<GameCharacter> parties, List<GameItem> items) {
 		super("StartEvent", parties, items);
 	}
@@ -23,7 +19,9 @@ public class StartEvent extends GameEvent {
 		return("The start of all nostalgia, expectations, let downs, and regrets.");
 	}
 
-	public void unfold(Scanner in) {
+	public void unfold(GameCharacter player, Scanner in) {
+		System.out.println("This is your character:");
+		player.printAll();
 		System.out.println("Press enter to begin:");
 		Game.prompt(in);
 		System.out.println("And so it begins...");
@@ -31,7 +29,7 @@ public class StartEvent extends GameEvent {
 
 	public String[] nextEvents() {
 
-		new TownEvent(parties, null);
+		new TownEvent();
 
 		return( new String[] {"!TownEvent"} );
 	}

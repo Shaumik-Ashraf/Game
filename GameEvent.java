@@ -1,6 +1,7 @@
 //GameEvent.java
 /* string: !eventname
- *
+ * parties is list of GameCharacters found there, should exclude player
+ * items is a list of Items found with the event
  */
 
 import java.util.*;

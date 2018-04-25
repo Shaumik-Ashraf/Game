@@ -24,10 +24,11 @@ public final class Game {
 		}
 	}
 
-	//return first index (i) of where s matches arr; note s matches arr[i] if:
-	//s is an int within the range of arr
-	//s is contained within arr[i] (case insensitive)
-	//returns -1 if not found
+	/*return first index (i) of where s matches arr; note s matches arr[i] if:
+	 *s is an int within the range of arr
+	 *s is contained within arr[i] (case insensitive)
+	 *returns -1 if not found
+	 */
 	public static int find(String s, String[] arr) {
 		try {
 			int x = 0;
@@ -113,7 +114,7 @@ public final class Game {
 		return( (int)(Math.random()*max) );
 	}
 
-	public String[] listToArray(AbstractList<String> list) { //converts string list to string array
+	public String[] listToArray(AbstractList<String> list) { //converts List<String> to String[]
 		String[] ret = new String[ list.size() ];
 		list.toArray(ret);
 		
@@ -145,7 +146,7 @@ public final class Game {
 
 	  System.out.println("Game start");
 	  player = Game.newGame(0, sc);
-	  event = new StartEvent(player);
+	  event = new StartEvent();
 
 	  while( event!=null ) {
 	    event.unfold(player, sc);

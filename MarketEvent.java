@@ -2,7 +2,7 @@
 
 import java.util.*;
 
-public class MarketEvent extends GameEvent {
+public class MarketEvent extends GrowingEvent {
 
 	public MarketEvent() {
 		super("MarketEvent");
@@ -20,8 +20,7 @@ public class MarketEvent extends GameEvent {
 		return("Sellers and scammers and buyers and beggers.");
 	}
 
-	public void unfold(Scanner in) {
-		PlayerCharacter player;
+	public void unfold(GameCharacter player, Scanner in) {
 
 		System.out.println("You are at a market.");
 		System.out.println("It is currently closed. Press enter to continue");
@@ -30,8 +29,8 @@ public class MarketEvent extends GameEvent {
 
 	public String[] nextEvents() {
 
-		new MarketEvent(parties, null);
-		new ForestEvent(parties, null);
+		new MarketEvent();
+		new ForestEvent();
 
 		return( new String[] {"!TownEvent", "!MarketEvent"} );
 	}

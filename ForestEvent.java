@@ -2,15 +2,10 @@
 
 import java.util.*;
 
-public class ForestEvent extends GameEvent {
+public class ForestEvent extends GrowingEvent {
 
     public ForestEvent() {
         super("ForestEvent");
-        items.add( new TreeItem() );
-    }
-
-    public ForestEvent(GameCharacter player) {
-        super("ForestEvent", player);
         items.add( new TreeItem() );
     }
 
@@ -23,9 +18,8 @@ public class ForestEvent extends GameEvent {
         return("The forest, with all its wood and game and wildlife.");
     }
 
-    public void unfold(Scanner in) {
+    public void unfold(GameCharacter player, Scanner in) {
 
-        PlayerCharacter player = null;
         String buf;
         String s;
         ArrayList<String> options = new ArrayList<String>();
@@ -33,9 +27,8 @@ public class ForestEvent extends GameEvent {
         items.add( new TreeItem() );
         items.add( new TreeItem() );
 
-        player = Game.getPlayer();
-
         options.add("Talk to that generic old man who gives free stuff");
+	//could change old man to class NPC extends GameCharacter
         if( player.hasSkill("(WoodCutting)") ) options.add("Cut wood");
         if( player.hasSkill("(Hunting)") ) options.add("Hunt");
         if( player.hasSkill("(Gathering)") ) options.add("Gather plants");
@@ -69,7 +62,7 @@ public class ForestEvent extends GameEvent {
                     skill.activate(player, this, targets, in);
                 }
                 else {
-                    System.out.println("You do not know how to hunt.");
+                    System.out.println("You do not know (Hunting).");
                 }
                 break;
             case 3: //gather

@@ -25,10 +25,14 @@ public class DebugEvent extends GameEvent {
 	}
 
 	//play out the event
-	public void unfold(Scanner in) {
+	public void unfold(GameCharacter player, Scanner in) {
 		String[] options = new String[] {"yes", "no", "quit"};
 		int x;
 		System.out.println("DebugEvent#unfold():");
+		System.out.println("====Printing Player================");
+		System.out.println(player);
+		player.printAll();
+
 		System.out.println("====Printing Parties================");
 		System.out.println(parties);
 

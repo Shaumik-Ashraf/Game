@@ -1,6 +1,6 @@
 //GrowingEvent.java
 //Only one instance allowed, which keeps items throughout
-//a new constructor will replace the party but keep items
+//a new constructor will inherit the previous instance's parties and items if any
 
 public abstract class GrowingEvent extends GameEvent {
 
@@ -13,7 +13,6 @@ public abstract class GrowingEvent extends GameEvent {
 	//creating new growing event with same name will inherit previous event
 	public GameEvent(String selfname){
 		String toS;
-		idCounter++;
 
 		parties = new LinkedList();
 		items = new LinkedList();
@@ -23,8 +22,10 @@ public abstract class GrowingEvent extends GameEvent {
 
 		if( GameEvent.pool.containsKey( toS ) ) {
 			//inherit all of its parties and items
-			GameEvent former = GameEvent.pool.get( toS );
-			//SEE List METHODS
+			GameEvent former = GameEvent.pool.remove( toS );
+			this.parties.addAll( former.parties );
+			this.items.addAll( former.items);
+			//former now free'd
 		}
 		GameEvent.pool.put( toString(), this );
 
@@ -46,8 +47,11 @@ public abstract class GrowingEvent extends GameEvent {
 		}
 
 		if( GameEvent.pool.containsKey( toS ) ) {
-			//replace previous instance
-			GameEvent.pool.remove( toS );
+			//inherit all of its parties and items
+			GameEvent former = GameEvent.pool.remove( toS );
+			this.parties.addAll( former.parties );
+			this.items.addAll( former.items);
+			//former now free'd
 		}
 		GameEvent.pool.put( toString(), this );
 	}
