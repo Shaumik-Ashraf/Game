@@ -8,10 +8,6 @@ public class MarketEvent extends GrowingEvent {
 		super("MarketEvent");
 	}
 
-	public MarketEvent(GameCharacter player) {
-		super("MarketEvent", player);
-	}
-
 	public MarketEvent(List<GameCharacter> parties, List<GameItem> items) {
 		super("MarketEvent", parties, items);
 	}

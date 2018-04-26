@@ -11,8 +11,8 @@ public class DebugEvent extends GameEvent {
 		super("DebugEvent");
 	}
 
-	public DebugEvent(GameCharacter p) {
-		super("DebugEvent", p);
+	public DebugEvent(boolean toPutInPool) {
+		super("DebugEvent", toPutInPool);
 	}
 
 	public DebugEvent(List<GameCharacter> parties, List<GameItem> items) {

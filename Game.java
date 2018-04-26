@@ -117,10 +117,10 @@ public final class Game {
 	public String[] listToArray(AbstractList<String> list) { //converts List<String> to String[]
 		String[] ret = new String[ list.size() ];
 		list.toArray(ret);
-		
+
 		return(ret);
 	}
-	
+
 	public static PlayerCharacter newGame(int options, Scanner in) {
 		//different options can have different setups
 		//0: create new character
@@ -164,9 +164,7 @@ public final class Game {
 		for(int i=0; i<nextEventStrs.length; i++) {
 			String s;
 			if( !GameEvent.pool.containsKey(nextEventStrs[i]) ) {
-				System.err.println("Found nonexisting event in nextEventStrs: " + nextEventStrs[i]);
-				System.err.println("Last event: " + event);
-				System.err.println("Next event !Debug!");
+				System.err.println("Error 404: Event not found!\n" + nextEventStrs[i]);
 				event = new DebugEvent();
 			}
 			s = nextEventStrs[i]
@@ -178,12 +176,14 @@ public final class Game {
 		System.out.println("Where do you go now?");
 		x = Game.prompt(sc, options, 0);
 		event = GameEvent.pool.get( nextEventStrs[x] );
-	    }
+	    } //close else
+
 	    for(GameItem gi : GameItem.pool.values()) {
-		gi.standby();
+	      	gi.standby();
 	    }
 	    System.out.print("\n\n");
-	  }
+
+	  } //close while
 
 	  System.exit(0);  //why not
 

@@ -24,9 +24,9 @@ public class TownEvent extends GrowingEvent {
 
 	public String[] nextEvents() {
 
-		new MarketEvent(parties, null);
-		new ForestEvent(parties, null);
-		new DebugEvent(parties, items);
+		new MarketEvent();
+		new ForestEvent();
+		new DebugEvent();
 
 		return( new String[] {"!MarketEvent", "!ForestEvent", "!DebugEvent"} );
 	}

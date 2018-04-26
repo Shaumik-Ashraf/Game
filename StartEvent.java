@@ -29,9 +29,10 @@ public class StartEvent extends GameEvent {
 
 	public String[] nextEvents() {
 
+		new DebugEvent();
 		new TownEvent();
 
-		return( new String[] {"!TownEvent"} );
+		return( new String[] {"!DebugEvent", "!TownEvent"} );
 	}
 
 }

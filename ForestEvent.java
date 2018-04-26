@@ -84,7 +84,7 @@ public class ForestEvent extends GrowingEvent {
 
     public String[] nextEvents() {
 
-        new TownEvent(parties, null);
+        new TownEvent();
 
         return( new String[] {"!TownEvent", "!ForestEvent"} );
     }

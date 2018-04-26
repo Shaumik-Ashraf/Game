@@ -18,20 +18,36 @@ public abstract class GameEvent {
 	//creating new event with same name will overwrite previous event
 	public GameEvent(String selfname){
 		String toS;
-		idCounter++;
 
 		parties = new LinkedList();
 		items = new LinkedList();
-		
+
 		name = selfname;
-		toS = "(" + name + ")";
+		toS = "!" + name;
 
 		if( GameEvent.pool.containsKey( toS ) ) {
 			//replace previous instance
 			GameEvent.pool.remove( toS );
 		}
 		GameEvent.pool.put( toString(), this );
+	}
 
+	//this is primarily for GrowingEvent
+	public GameEvent(String selfname, boolean toPutInPool) {
+		String toS;
+
+		parties = new LinkedList();
+		items = new LinkedList();
+
+		name = selfname;
+		toS = "!" + name;
+
+		if( toPutInPool ) {
+			if( GameEvent.pool.containsKey( toS ) ) {
+				GameEvent.pool.remove( toS );
+			}
+			GameEvent.pool.put( toString(), this );
+		}
 	}
 
 	public GameEvent(String selfname, List<GameCharacter> p, List<GameItem> i){
@@ -40,7 +56,7 @@ public abstract class GameEvent {
 		name = selfname;
 		parties = p;
 		items = i;
-		toS = "(" + name + ")";
+		toS = "!" + name;
 
 		if( parties==null ) {
 			parties = new LinkedList();
@@ -71,7 +87,7 @@ public abstract class GameEvent {
 			else ;
 		}
 	}
-	
+
 	public void reset(List<GameCharacter> p, List<GameItem> i) {
 		parties = p;
 		items = i;
