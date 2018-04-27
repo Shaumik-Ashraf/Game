@@ -102,7 +102,7 @@ public class TownEvent extends GrowingEvent {
 		new ForestEvent();
 		new DebugEvent();
 
-		return( new String[] {"!MarketEvent", "!ForestEvent", "!DebugEvent"} );
+		return( new String[] {"!TownEvent", "!MarketEvent", "!ForestEvent", "!DebugEvent"} );
 	}
 
 }
