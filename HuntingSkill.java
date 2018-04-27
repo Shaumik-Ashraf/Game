@@ -11,7 +11,7 @@ public class HuntingSkill extends GameSkill {
     //public String name;  //should be same as descendant's class name w/o Skill suffix; UNIQUE
 
     public HuntingSkill() {
-        super("(Hunting)");
+        super("Hunting");
     }
 
     //return description of skill

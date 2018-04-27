@@ -142,7 +142,7 @@ public abstract class GameCharacter {
 		items.add(it);
 	}
 
-	public void giveItem(GameItem it, Player to) { //gives only from items
+	public void giveItem(GameItem it, GameCharacter to) { //gives only from items
 		int i = items.indexOf(it);
 		to.items.add( items.remove(i) );
 	}
@@ -198,16 +198,15 @@ public abstract class GameCharacter {
 	
 	public void printStats() {
 		System.out.println("Character " + this + " summary:");
-		System.out.println("Stats [str,dex,con,kno]: " + new int[] {str,dex,con,kno});
-		System.out.println("skills: " + skills);
-		System.out.println("equips: " + equips);
-		System.out.println("items: " + items);
+		System.out.println( describe() );
+		System.out.println("Stats {str, dex, con, kno}: " + Game.arrayToString(new int[] {str,dex,con,kno}));
 	}
 
 	public void printAll() {
 		System.out.println("Character " + this + " summary:");
-		System.out.print("Stats [str,dex,con,kno]: ");
-		System.out.println("[" + str + "," + dex + "," + con + "," + kno + "]");
+		System.out.println( describe() );
+		System.out.print("Stats {str,dex,con,kno}: ");
+		System.out.println("{" + str + "," + dex + "," + con + "," + kno + "}");
 		System.out.println("skills: " + skills);
 		System.out.println("equips: " + equips);
 		System.out.println("items: " + items);

@@ -114,23 +114,48 @@ public final class Game {
 		return( (int)(Math.random()*max) );
 	}
 
-	public String[] listToArray(AbstractList<String> list) { //converts List<String> to String[]
+	public static String[] listToArray(AbstractList<String> list) { //converts List<String> to String[]
 		String[] ret = new String[ list.size() ];
 		list.toArray(ret);
 
 		return(ret);
 	}
 
+	public static String arrayToString(int[] array) {
+		//convert int[] to {array[0], array[1], ...}
+		String s = "{";
+		for(int i=0; i<array.length-1; i++) {
+			s += (array[i] + ", ");
+		}
+		s += (array[array.length-1] + "}");
+		return(s);
+	}
+
 	public static PlayerCharacter newGame(int options, Scanner in) {
-		//different options can have different setups
+		//leter feature: different options can have different setups
 		//0: create new character
 		//1: load character
 		//2: hotseat style
 
 		PlayerCharacter ret;
+		String name, desc;
+		int[] stats = new int[4];
 
-		//for now...
-		ret = new PlayerCharacter("Beta");
+		System.out.println("Creating character...");
+		System.out.println("What is your name:");
+		name = Game.prompt(in);
+		System.out.println("Now describe yourself:");
+		desc = Game.prompt(in);
+
+		stats[0] = Game.rng()+1; //strength
+		stats[1] = Game.rng()+1; //dexterity
+		stats[2] = Game.rng()+1; //constitution
+		stats[3] = Game.rng()+1; //knowledge
+
+		ret = new PlayerCharacter(name, stats, desc);
+		System.out.println("This is your character:");
+		ret.printStats();
+		System.out.println("\n\n");
 
 		return(ret);
 	}

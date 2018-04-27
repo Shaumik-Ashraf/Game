@@ -34,21 +34,21 @@ public abstract class GameItem {
 		GameItem.pool.remove( toString() );
 	}
 
-	public void equip(Player owner, Player equipee) {
+	public void equip(GameCharacter owner, GameCharacter equipee) {
 		int i = owner.items.indexOf(this);
 		equipee.equips.add( equipee.items.remove(i) );
 	}
 
-	public void unequip(Player equipee) {
+	public void unequip(GameCharacter equipee) {
 		int i = equipee.equips.indexOf( this );
 		equipee.items.add( equipee.equips.remove(i) );
 	}
 
-	public void give(Player to) {
+	public void give(GameCharacter to) {
 		to.items.add( this );
 	}
 
-	public void give(Player from, Player to) {
+	public void give(GameCharacter from, GameCharacter to) {
 		int i = from.items.indexOf( this );
 		to.items.add( from.items.remove(i) );
 
