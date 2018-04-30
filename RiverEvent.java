@@ -27,8 +27,12 @@ public class RiverEvent extends GrowingEvent {
 
 	//play out the event
 	public void unfold(GameCharacter player, Scanner in) {
-		ArrayList<String> options = new ArrayList<String>();	
+		ArrayList<String> options = new ArrayList<String>();
+		GameItem gi;
+		GameSkill gs;
+		String[] targets;
 		int r = Game.rng(4); //r = 0, 1, 2, or 3
+
 		for(int i=0; i<r; i++) {
 			items.add( new FishItem() );
 		}
@@ -43,13 +47,20 @@ public class RiverEvent extends GrowingEvent {
 					System.out.println("...");
 				}
 				else {
-					System.out.println("You seem to be patient; time to teach you how to fish");
+					System.out.println("You seem to be patient; let me teach you how to fish...");
 					player.learn( new FishingSkill().toString() );
-					player.gain( new FishingRodItem().toString() );
+					gi = new FishingRodItem();
+					player.gain( gi.toString() );
+					System.out.println("You learned (Fishing)!");
+					System.out.println("You gained a " + gi);
 				}
 				break; 
 			case 1: //fish
-				//!!!!!!!!!!!!!!!
+				if( user.has("(Fishing)") ) {
+					gs = GameSkill.pool.get("(Fishing)");
+					targets = gs.select(user, event, in);
+					gs.activate(user, event, targets, in);
+				}
 				break;
 			default:
 				break;
