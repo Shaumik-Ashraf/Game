@@ -6,7 +6,7 @@
 
 import java.util.*;
 
-public class FishingSkill {
+public class FishingSkill extends GameSkill {
 
 	public FishingSkill() {
 		super("Fishing");
@@ -23,7 +23,7 @@ public class FishingSkill {
 		ArrayList<String> ret = new ArrayList<String>();
 
 		for(GameItem gi : event.items) {
-			if( gi.is("Fish") ) { 
+			if( gi.is("Fish") ) {
 				ret.add( gi.toString() );
 			}
 		}
@@ -34,16 +34,16 @@ public class FishingSkill {
 	public void activate(GameCharacter user, GameEvent event, String[] targets, Scanner in) {
 		GameItem fish;
 		GameItem rawFish;
-		int fishingExp;
+		int fishingExp = 0;
 		int fishCaught = 0;
 		boolean hasFishingRod = false;
 
-		if( !user.cookies.containsKey("FishingExp" ) {
+		if( !user.cookies.containsKey("FishingExp") ) {
 			user.cookies.put("FishingExp", "0");
 			fishingExp = 0;
 		}
 		else {
-			try { 
+			try {
 				fishingExp = Integer.parseInt( user.cookies.get("FishingExp") );
 			} catch(Exception e) { ; } //shouldn't occur
 		}

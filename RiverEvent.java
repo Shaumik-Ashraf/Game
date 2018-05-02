@@ -14,7 +14,7 @@ public class RiverEvent extends GrowingEvent {
 
 	public RiverEvent() {
 		super("RiverEvent");
-		
+
 		items.add( new FishItem() );
 		items.add( new FishItem() );
 		items.add( new FishItem() );
@@ -41,7 +41,7 @@ public class RiverEvent extends GrowingEvent {
 		if( player.hasSkill("(Fishing)") ) { options.add("Fish"); }
 
 		System.out.println("What do you do?");
-		switch( Game.prompt(options, in, 0) ) {
+		switch( Game.prompt(in, options, 0) ) {
 			case 0: //talk
 				if( Game.rng()<8 ) {
 					System.out.println("...");
@@ -54,12 +54,12 @@ public class RiverEvent extends GrowingEvent {
 					System.out.println("You learned (Fishing)!");
 					System.out.println("You gained a " + gi);
 				}
-				break; 
+				break;
 			case 1: //fish
-				if( user.has("(Fishing)") ) {
+				if( player.has("(Fishing)") ) {
 					gs = GameSkill.pool.get("(Fishing)");
-					targets = gs.select(user, event, in);
-					gs.activate(user, event, targets, in);
+					targets = gs.select(player, this, in);
+					gs.activate(player, this, targets, in);
 				}
 				break;
 			default:
