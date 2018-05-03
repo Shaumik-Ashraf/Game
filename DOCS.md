@@ -23,7 +23,7 @@ Each core class contains a public static HashMap pool<String,E> which maps the I
 the game to be accessed by passing around arrays or list of strings. The format and retrieval method for each core class is outlined below
 
 |    Class      |   IDS   |      Retrieval Method       |                                   Notes                                |
-|===============|=========|=============================|========================================================================|
+|---------------|---------|-----------------------------|------------------------------------------------------------------------|
 | GameCharacter | NAME@ID | GameCharacter.pool.get(IDS) | where NAME and ID is the *.name and *.id attribute respectively        |
 | GameItem      | ITEM#ID | GameItem.pool.get(IDS)      | where ITEM is the class name without the suffix and ID is id attribute |
 | GameEvent     | !EVENT  | GameEvent.pool.get(IDS)     | where EVENT is the class name without the suffix                       |
