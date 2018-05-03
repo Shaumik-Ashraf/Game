@@ -42,14 +42,241 @@ and IDS. GameEvent and GameSkill classes should only have 1 instance; a new inst
  - The Game class provides static utility functions; see below
 
 ## Abstract methods of each class
-#### GameCharacter
-#### GameEvent
-#### GameSkill
-#### GameItem
 
-## Method References
 #### GameCharacter
+```
+	public abstract String describe();
+
+	public abstract String[] die();
+	//returns an array of IDS for use by event/skill
+	//defined as { return(null); } for class PlayerCharacter
+```
 #### GameEvent
+```
+	public abstract String describe();
+
+	public abstract void unfold(GameCharacter player, Scanner in);
+	//plays out the event;
+	//options are presented to the player and corresponding code is executed
+
+	public abstract String[] nextEvents();
+	//returns an array of IDS to all next possible events
+	//make sure the events have been initialized!
+	//if null is returned, game ends
+```
 #### GameSkill
+```
+	public abstract String describe();
+
+	public abstract String[] select(GameCharacter user, GameEvent event, Scanner in);
+	//manages io and returns an array of IDS
+	//the return value is the arguement for activate()'s targets parameter
+
+	public abstract void activate(GameCharacter user, GameEvent event, String[] targets, Scanner in);
+	//actually execute the skill and object interactions
+	//alter stats, create/destroy items, etc.
+```
 #### GameItem
+```
+	public abstract String describe();
+
+	public abstract void standby();
+	//execute any effects as time passes; once/turn (aka once/event)
+
+	public abstract void equipEffect(GameCharacter equipee);
+	//execute effect of item if equipped
+
+	public abstract void unequipEffect(GameCharacter exequipee);
+	//undo effect of equipping item
+
+	public abstract void characterEffect(GameCharacter gchar);
+	//execute special effects of item if used on another character
+
+	public abstract void itemEffect(GameItem otherItem);
+	//execute any effect on another item(s)
+
+	/* Note all the *Effect() methods exist for possible complex future implementations of GameItem
+	 * All real effects should be executed by GameSkill's activate() and there is no guarantee
+	 * that other skills will ever execute these methods despite using the item
+	 */
+
+```
+## Method References
+
+#### Game
+```
+	public static String prompt(Scanner in);
+	//prints ">>" and returns in.nextLine()
+	
+	public static int find(String s, String[] arr);
+	/* String matching algorithm used by this game!
+	 * returns first index (i) of where s matches arr; note s matches arr[i] if:
+	 * s is an int within the range of arr, in which case i = parseInt(s)
+	 * s is found within arr[i] (case insensitive)
+	 * returns -1 if not found
+	 */
+
+	public static boolean promptContinue(Scanner in)
+	//returns true if yes; returns false if no
+	//assumes yes if only '\n' is scanned
+
+	public static int prompt(Scanner in, String[] arr);
+	//prints arr and then asks user to select one
+	//uses Game.find() to return index of string in arr selected
+
+	public static int prompt(Scanner in, ArrayList<String> arr, int ignore)
+	//same as the method above but with an ArrayList<String> rather than String[]
+	//use 0 for paramter ignore (or any other int)
+
+	public static PlayerCharacter getPlayer();
+	//returns alias to first GameCharacter with "IsMainCharacter" key in cookies
+
+	public static int rng();
+	//returns random number from 0 to 10
+
+	public static int rng(int max);
+	//returns random number from 0 to max
+
+	public static String[] listToArray(AbstractList<String> list);
+	//converts List<String> to String[]
+
+	public static String arrayToString(int[] array);
+	//converts int[] to printable String
+```
+#### GameCharacter
+```
+	public static HashMap<String,GameCharacter> pool;
+
+	public int str, dex, con, kno;
+	public String name;
+	public AbstractList<GameSkill> skills;
+	public AbstractList<GameItem> equips;
+	public AbstractList<GameItem> items;
+	public HashMap<String,String> cookies;
+
+	public GameCharacter(String nam) {
+	//constructor; subclasses must override
+	//automatically puts into Gamecharacter.pool and generates stats
+
+	public String toString();
+
+	public int getId();
+
+	public void learn(String ids);
+	//identifies ids and adds to items/skills as appropriate
+	//adds as a key to cookies of unidentified
+
+	public void gain(String ids)
+	//identifies ids and adds to items/skills as appropriate
+	//adds as a key to cookies if unidentified
+
+	public boolean has(String ids);
+	//returns true if found in items/equips/skills/cookies.keys
+
+	public void destroy(String ids);
+	//finds ids among player's items/equips/skills and destroys it properly
+
+	public void equip(String ids);
+	//must be in items
+
+	public void unequip(String ids);
+
+	public void learnSkill(GameSkill sk);
+
+	public void forgetSkill(GameSkill sk);
+
+	public void gainItem(GameItem it);
+
+	public void giveItem(GameItem it, GameCharacter to)
+	//gives only from items
+
+	public void destroyItem(GameItem it);
+	//destroys from items or equips
+
+	public void equipItem(GameItem it);
+
+	public void unequipItem(GameItem equipped);
+
+	public boolean hasSkill(String ids);
+
+	public boolean hasItem(String ids);
+	//searches items and equips
+
+	public void destroy();
+	//destroy all of its own skills and items, and then itself
+	
+	public void printStats();
+
+	public void printAll();
+```
+#### GameEvent
+```
+	public static HashMap<String,GameEvent> pool;
+
+	public String name;
+	public List<GameCharacter> parties;
+	public List<GameItem> items;
+
+	/* Note: parties list should EXCLUDE the player
+     * Use subclass GrowingEvent to maintain items in later occurences
+     */
+
+	public GameEvent(String selfname){
+	//selfname should be same as subclass's class name
+	//I.e: TownEvent's constructor: {super("TownEvent");}
+
+	public String toString();
+
+	public void add(String[] ids);
+	//adds to parties/items as appropraite
+
+	public void reset(List<GameCharacter> p, List<GameItem> i);
+
+	public void destroy(String ids);
+
+	public void destroyItem(GameItem item);
+
+	public void destroyParty(GameCharacter party);
+```
+#### GameSkill
+```
+	public static HashMap<String, GameSkill> pool;
+
+	public String name;
+
+	public GameSkill(String newSkillName);
+	//parameter should be same as descendant's class name w/o Skill suffix; UNIQUE
+	//will replace any previous instances; so skills shouldn't store any data
+
+	public String toString();
+```
+#### GameItem
+```
+	public static HashMap<String,GameItem> pool = new HashMap<String,GameItem>();
+
+	public String name;
+	private int id;
+
+	public GameItem(String selfName);
+	//selfName parameter should be same as subclass' name
+
+	public String toString();
+
+	public int getId();
+
+	public void destroy();
+	//DO NOT USE unless you know what you're doing
+
+	public void equip(GameCharacter owner, GameCharacter equipee);
+
+	public void unequip(GameCharacter equipee);
+
+	public void give(GameCharacter to);
+
+	public void give(GameCharacter from, GameCharacter to);
+
+	public boolean is(String trueIfContainsInName);
+	//new FishingRod().is("Fish") => true
+	//case sensitive!
+```
 
