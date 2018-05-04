@@ -28,7 +28,8 @@ public class TownEvent extends GrowingEvent {
 		options = new String[] {"View Items/Skills",
 					"Equip Items",
 					"Unequip Items",
-					"Destroy Items"};
+					"Destroy Items",
+					"Nothing - like a bum"};
 		switch( Game.prompt(in, options) ) {
 			case 0: //view
 				player.printAll();
@@ -90,6 +91,8 @@ public class TownEvent extends GrowingEvent {
 					}
 				} while( Game.promptContinue(in) );
 				break;
+			case 4: //nothing
+				;
 			default:
 				break;
 		}
@@ -100,9 +103,10 @@ public class TownEvent extends GrowingEvent {
 
 		new MarketEvent();
 		new ForestEvent();
+		new RiverEvent();
 		new DebugEvent();
 
-		return( new String[] {"!TownEvent", "!MarketEvent", "!ForestEvent", "!DebugEvent"} );
+		return( new String[] {"!TownEvent", "!MarketEvent", "!ForestEvent", "!RiverEvent", "!DebugEvent"} );
 	}
 
 }
