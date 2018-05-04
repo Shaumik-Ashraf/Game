@@ -7,11 +7,13 @@ public class ForestEvent extends GrowingEvent {
     public ForestEvent() {
         super("ForestEvent");
         items.add( new TreeItem() );
+		items.add( new PreyItem() );
     }
 
     public ForestEvent(List<GameCharacter> parties, List<GameItem> items) {
         super("ForestEvent", parties, items);
         items.add( new TreeItem() );
+		items.add( new PreyItem() );
     }
 
     public String describe() {
@@ -26,6 +28,8 @@ public class ForestEvent extends GrowingEvent {
 
         items.add( new TreeItem() );
         items.add( new TreeItem() );
+		items.add( new PreyItem() );
+		items.add( new PreyItem() );
 
         options.add("Talk to that generic old man who gives free stuff");
 	//could change old man to class NPC extends GameCharacter

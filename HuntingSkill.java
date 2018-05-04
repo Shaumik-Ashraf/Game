@@ -31,12 +31,6 @@ public class HuntingSkill extends GameSkill {
 			}
         }
 
-        for(int i=0; i<arr.size(); i++) {
-            if( Game.rng()>8 ) {
-                arr.remove(i);
-            }
-        }
-
         ret = new String[ arr.size() ];
         arr.toArray(ret);
 
