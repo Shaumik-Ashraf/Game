@@ -22,16 +22,13 @@ public class HuntingSkill extends GameSkill {
     //manage io and return array for activate()'s arg
     public String[] select(GameCharacter user, GameEvent event, Scanner in) {
         //search through all event.items and select backgroundItems which could be hunted
-        String[] huntable = new String[] {"deer", "bear", "chicken"};
         ArrayList<String> arr = new ArrayList<String>();
         String[] ret;
 
         for(GameItem gi : event.items) {
-            for(String s : huntable) {
-                if( gi.is(s) ) {
-                    arr.add( gi.toString() );
-                }
-            }
+			if( gi.is("Prey") ) {
+				arr.add( gi.toString() );
+			}
         }
 
         for(int i=0; i<arr.size(); i++) {
@@ -62,8 +59,7 @@ public class HuntingSkill extends GameSkill {
                 System.out.println("It got away.");
             }
             else {
-                event.items.remove( event.items.indexOf( toHunt ) );
-                toHunt.destroy();
+                event.destroyItem( toHunt );
                 user.gain( new RawMeatItem().toString() );
             }
         }
